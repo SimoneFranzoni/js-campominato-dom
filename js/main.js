@@ -4,6 +4,7 @@ const grill = document.querySelector('.grill');
 let bombs = [];
 let contatore = 0;
 let gioco;
+const bombnumber = 16;
 
 
 document.getElementById('play').addEventListener('click', function(){
@@ -12,8 +13,8 @@ document.getElementById('play').addEventListener('click', function(){
 
 function play(){
 
-    document.getElementsByClassName("main").innerHTML = "";
-    document.getElementById("title").innerHTML = ""
+    document.querySelector(".grill").innerHTML = "";
+    document.getElementById("title").innerHTML = "";
 
     const level = document.getElementById('difficult').value;
     if (level == "easy"){
@@ -55,10 +56,11 @@ function generatePlayGround(){
 }
 
 function generateBomb(){
-   while (bombs.length < 16){
+   while (bombs.length < bombnumber){
         const bomb = Math.floor(Math.random() * cellnum) + 1;
         if(!bombs.includes(bomb)) bombs.push(bomb);
     }
+    console.log(bombs);
 }
 
 
@@ -75,14 +77,16 @@ function endProgram(){
     gioco = 'finito';
     console.log(gioco);
 
-    const allSquare = document.querySelectorAll('square'); //seleziona tutti gli elementi square
+    allSquare = document.querySelectorAll('.square'); //seleziona tutti gli elementi square
     console.log(allSquare);
 
     for (let i = 1; i <= allSquare.length; i++){
-        for (let j = 0; j < 16; j++){
+        for (let j = 0; j < bombnumber; j++){
             if(allSquare[i] === bombs[j]){
                 allSquare[i].classList.add('bomb');
+                
             }
         }
+    
     }
 }

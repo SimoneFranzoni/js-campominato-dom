@@ -3,6 +3,7 @@ let cellrow;
 const grill = document.querySelector('.grill');
 let bombs = [];
 let contatore = 0;
+let gioco;
 
 
 document.getElementById('play').addEventListener('click', function(){
@@ -10,6 +11,9 @@ document.getElementById('play').addEventListener('click', function(){
 })
 
 function play(){
+
+    document.getElementsByClassName("main").innerHTML = "";
+    document.getElementById("title").innerHTML = ""
 
     const level = document.getElementById('difficult').value;
     if (level == "easy"){
@@ -22,15 +26,9 @@ function play(){
         cellnum = 49;
         cellrow = 7;
     }
-    console.log(cellnum);
 
-    var element = document.getElementById("title");
-    element.classList.add("sf-d-n");
-
-    /*var element = document.getElementsByClassName("grill");
-    element.classList.add("sf-d-n");*/
-    
     generatePlayGround();
+
 }   
 
 function generatePlayGround(){
@@ -39,28 +37,28 @@ function generatePlayGround(){
         const sq = createSquare(grill);
         sq.innerHTML = i;
 
-        sq.addEventListener ('click', function(){     
-            for (let j = 0; j < 16; j++){
-                if(i === bombs[j]){
-                    this.classList.add('bomb');
-                    endProgram();
+        sq.addEventListener ('click', function(){ 
+            if(gioco !== "finito"){    
+                for (let j = 0; j < 16; j++){
+                    if(i === bombs[j]){
+                        this.classList.add('bomb');
+                        endProgram();
+                    }
+                    else{
+                        this.classList.add('free');
+                    }
                 }
-                else{
-                    this.classList.add('free');
-                }
+                contatore++; 
             }
-            contatore++; 
         })
     }
 }
 
 function generateBomb(){
-// Vengono generati 16 bombe ma con numeri anche uguali tra di loro
-    for (let i = 0; i < 16; i++){
-        bomb = Math.floor(Math.random() * cellnum) + 1;
-        bombs.push(bomb);
+   while (bombs.length < 16){
+        const bomb = Math.floor(Math.random() * cellnum) + 1;
+        if(!bombs.includes(bomb)) bombs.push(bomb);
     }
-    console.log(bombs);
 }
 
 
@@ -74,16 +72,17 @@ function createSquare(target){
 
 function endProgram(){
     document.getElementById('result').innerHTML = "Hai perso, hai azzeccato "+contatore+" tentativi";
-    console.log(contatore);
-/*
-    for (let i = 1; i <= cellnum; i++){
+    gioco = 'finito';
+    console.log(gioco);
+
+    const allSquare = document.querySelectorAll('square'); //seleziona tutti gli elementi square
+    console.log(allSquare);
+
+    for (let i = 1; i <= allSquare.length; i++){
         for (let j = 0; j < 16; j++){
-            if(i === bombs[j]){
-                sq.classList.add('bomb');
-            }
-            else{
-                sq.classList.add('free');
+            if(allSquare[i] === bombs[j]){
+                allSquare[i].classList.add('bomb');
             }
         }
-    }*/
+    }
 }

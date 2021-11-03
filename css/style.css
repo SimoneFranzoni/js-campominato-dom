@@ -40,10 +40,6 @@ main{
     background-color: rgb(201, 196, 196);
 }
 
-.sf-d-n{
-    display: none;
-}
-
 .square{
     display: flex;
     justify-content: center;

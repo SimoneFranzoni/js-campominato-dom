@@ -2,7 +2,7 @@ let cellnum;
 let cellrow;
 const grill = document.querySelector('.grill');
 let bombs = [];
-let len = bombs.length;
+let contatore = 0;
 
 
 document.getElementById('play').addEventListener('click', function(){
@@ -35,29 +35,29 @@ function play(){
 
 function generatePlayGround(){
     generateBomb();
-//da rifare il ciclo for usando la lunghezza dell'array
     for (let i = 1; i <= cellnum; i++){
         const sq = createSquare(grill);
         sq.innerHTML = i;
-        
-        sq.addEventListener ('click', function(){      
-            
-            for (let j = 0; j < 100; j++){
+
+        sq.addEventListener ('click', function(){     
+            for (let j = 0; j < 16; j++){
                 if(i === bombs[j]){
                     this.classList.add('bomb');
+                    endProgram();
                 }
                 else{
                     this.classList.add('free');
-                    //return;
                 }
             }
+            contatore++; 
         })
     }
 }
 
 function generateBomb(){
+// Vengono generati 16 bombe ma con numeri anche uguali tra di loro
     for (let i = 0; i < 16; i++){
-        const bomb = Math.floor(Math.random() * cellnum) + 1;
+        bomb = Math.floor(Math.random() * cellnum) + 1;
         bombs.push(bomb);
     }
     console.log(bombs);
@@ -69,4 +69,21 @@ function createSquare(target){
     sq.classList.add('square');
     target.append(sq);
     return sq;
+}
+
+
+function endProgram(){
+    document.getElementById('result').innerHTML = "Hai perso, hai azzeccato "+contatore+" tentativi";
+    console.log(contatore);
+/*
+    for (let i = 1; i <= cellnum; i++){
+        for (let j = 0; j < 16; j++){
+            if(i === bombs[j]){
+                sq.classList.add('bomb');
+            }
+            else{
+                sq.classList.add('free');
+            }
+        }
+    }*/
 }

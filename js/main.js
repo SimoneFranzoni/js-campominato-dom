@@ -1,6 +1,9 @@
 let cellnum;
 let cellrow;
 const grill = document.querySelector('.grill');
+let bombs = [];
+let len = bombs.length;
+
 
 document.getElementById('play').addEventListener('click', function(){
     play();
@@ -30,16 +33,36 @@ function play(){
     generatePlayGround();
 }   
 
-
 function generatePlayGround(){
-    for (let i = 0; i < cellnum; i++){
+    generateBomb();
+//da rifare il ciclo for usando la lunghezza dell'array
+    for (let i = 1; i <= cellnum; i++){
         const sq = createSquare(grill);
-        sq.innerHTML = i + 1;
-        sq.addEventListener('click',function(){
-            this.classList.add('clicked');
+        sq.innerHTML = i;
+        
+        sq.addEventListener ('click', function(){      
+            
+            for (let j = 0; j < 100; j++){
+                if(i === bombs[j]){
+                    this.classList.add('bomb');
+                }
+                else{
+                    this.classList.add('free');
+                    //return;
+                }
+            }
         })
     }
 }
+
+function generateBomb(){
+    for (let i = 0; i < 16; i++){
+        const bomb = Math.floor(Math.random() * cellnum) + 1;
+        bombs.push(bomb);
+    }
+    console.log(bombs);
+}
+
 
 function createSquare(target){
     const sq = document.createElement('div');

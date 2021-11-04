@@ -13,6 +13,7 @@ document.getElementById('play').addEventListener('click', function(){
 
 function play(){
 
+    //document.querySelector("main").innerHTML = "";
     document.querySelector(".grill").innerHTML = "";
     document.getElementById("title").innerHTML = "";
 
@@ -38,6 +39,9 @@ function generatePlayGround(){
         const sq = createSquare(grill);
         sq.innerHTML = i;
 
+        const cellSize = `calc(100% / ${cellrow})`;
+        sq.style.width = cellSize;
+        
         sq.addEventListener ('click', function(){ 
             if(gioco !== "finito"){    
                 for (let j = 0; j < 16; j++){
